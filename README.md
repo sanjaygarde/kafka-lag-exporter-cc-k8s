@@ -4,8 +4,11 @@ This app/tool can be used to deploy the kafka-lag-exporter (https://github.com/s
 Here's how you use it. First edit the klg-deployment.yaml file with details of your confluent cloud account, then you run it as below:
 
 _kubectl apply -f klg-configmap.yaml_
+
 _kubectl apply -f klg-deployment.yaml_
+
 _kubectl apply -f klg-service.yaml_
+
 
 Test it as below:
 
