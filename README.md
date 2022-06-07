@@ -10,7 +10,7 @@ _kubectl apply -f klg-deployment.yaml_
 _kubectl apply -f klg-service.yaml_
 
 
-Test it as below:
+**Test it as below:**
 
 Get the pod name by running:
 
