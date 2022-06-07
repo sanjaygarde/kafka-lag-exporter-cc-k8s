@@ -18,4 +18,4 @@ _kubectl get pods_
 
 And then
 
-_./port-forward.sh <your pod name>_
+_./port-forward.sh \<your pod name\>_
