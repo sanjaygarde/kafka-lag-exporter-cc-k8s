@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka-lag-exporter-1646888313
+  labels:
+    app.kubernetes.io/name: kafka-lag-exporter
+    helm.sh/chart: kafka-lag-exporter-0.6.8
+    app.kubernetes.io/instance: kafka-lag-exporter-1646888313
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: kafka-lag-exporter
+      app.kubernetes.io/instance: kafka-lag-exporter-1646888313
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: kafka-lag-exporter
+        app.kubernetes.io/instance: kafka-lag-exporter-1646888313
+    spec:
+      containers:
+        - name: kafka-lag-exporter
+          image: "lightbend/kafka-lag-exporter:0.6.8"
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 8000
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /metrics?name[]=kafka_consumergroup_poll_time_ms
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 15
+            timeoutSeconds: 30
+            failureThreshold: 3
+            successThreshold: 1
+          readinessProbe:
+            httpGet:
+              path: /metrics?name[]=kafka_consumergroup_poll_time_ms
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 5
+            timeoutSeconds: 30
+            failureThreshold: 3
+            successThreshold: 1
+          volumeMounts:
+            - name: config-volume
+              mountPath: /opt/docker/conf/
+          resources:
+            {}
+      volumes:
+        - name: config-volume
+          configMap:
+            name: kafka-lag-exporter-1646888313-configmap

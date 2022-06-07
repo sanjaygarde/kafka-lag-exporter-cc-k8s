@@ -1,0 +1,26 @@
+---
+# Source: kafka-lag-exporter/templates/050-Service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafka-lag-exporter-1646888313-service
+  labels:
+    app.kubernetes.io/name: kafka-lag-exporter
+    helm.sh/chart: kafka-lag-exporter-0.6.8
+    app.kubernetes.io/instance: kafka-lag-exporter-1646888313
+    app.kubernetes.io/managed-by: Helm
+    jobLabel: kafka-lag-exporter-1646888313
+  annotations:
+    prometheus.io/path: /metrics
+    prometheus.io/port: "8000"
+    prometheus.io/scrape: "true"
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8000
+      targetPort: 8000
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: kafka-lag-exporter
+    app.kubernetes.io/instance: kafka-lag-exporter-1646888313
